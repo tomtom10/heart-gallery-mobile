@@ -1,0 +1,68 @@
+{% extends "layout.html" %}
+
+{% block title %}
+{{ child.name }}
+{% endblock %}
+
+{% block content %}
+<h1>{{ child.name }}</h1>
+<div class="photo">
+	<img src="/images/children/primary/{{ child.image }}">
+	{% if child.photographerLink %}
+	<div class="caption">Photographed by <a href="{{ child.photographerLink }}">{{ child.photographerName }}</a></div>
+	{% else %}
+	<div class="caption">Photographed by {{ child.photographerName }}</div>
+	{% endif %}
+</div>
+
+{% if child.images %}
+<div id="picturesTitle" class="mediaTitle">
+	<span class="toggle">More pictures<span class="caret"></span></span>
+	<span class="toggle hidden">Hide pictures<span class="caret caret-up"></span></span>
+</div>
+<ul id="pictures" class="media">
+	{% for image in child.images %}
+	<li>
+		<img src="/images/children/{{ image.name }}">
+		<div class="caption">{{ image.caption }}</div>
+	</li>
+	{% endfor %}
+</ul>
+{% endif %}
+
+{% if child.audios %}
+<div id="audioTitle" class="mediaTitle">
+	<span class="toggle">Listen to audio<span class="caret"></span></span>
+	<span class="toggle hidden">Hide audio<span class="caret caret-up"></span></span>
+</div>
+<ul id="audios" class="media">
+	{% for audio in child.audios %}
+	<li>
+		<audio controls>
+			<source src="/images/children/sound_clips/{{ audio.name }}" />
+		</audio>
+		<div class="caption">{{ audio.caption }}</div>
+	</li>
+	{% endfor %}
+</ul>
+{% endif %}
+
+{% if child.videos %}
+<div id="videoTitle" class="mediaTitle">
+	<span class="toggle">Watch video<span class="caret"></span></span>
+	<span class="toggle hidden">Hide video<span class="caret caret-up"></span></span>
+</div>
+<ul id="videos" class="media">
+	{% for video in child.videos %}
+	<li>
+		<video controls preload="metadata">
+			<source src="/images/children/sound_clips/{{ video.name }}" type='video/mp4' />
+		</video>
+		<div class="caption">{{ video.caption }}</div>
+	</li>
+	{% endfor %}
+</ul>
+{% endif %}
+
+<p>{% autoescape false %}{{ child.biography }}{% endautoescape %}</p>
+{% endblock %}
