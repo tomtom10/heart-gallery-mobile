@@ -3,17 +3,17 @@ This is a mobile website I completed for the [Heart Gallery of Alabama](http://h
 ### Design Goals
 The Heart Gallery's existing desktop website included lists of children and a detail page for each child including a short bio, photos, and videos. The client and I identified two core use cases for the site:
 
-* As a potential adoptive family, browse children matching your age or gender preference.
+* As a potential adoptive family, browse children matching your age or gender preferences.
 * As a Heart Gallery employee, quickly find a specific child's detail page to display to a potential adoptive family.
 
-The desktop website suffered from a couple of usability issues that could make acomplishing these goals difficult, especially on mobile devices:
+The desktop website suffered from several usability issues that could make acomplishing these goals difficult, especially on mobile devices:
 
-* Child lists were displayed as grids of irregularly sized images and child names, so navigating required much scrolling and zooming.
-* Child lists were long but unsorted, so finding a specific child could require scrolling through the entire list.
+* Child lists were displayed as grids of irregularly sized images and child names, so navigating them required much scrolling and zooming.
+* Child lists were long but unsorted, so finding a specific child could require visually scanning the entire list.
 * Child detail pages used a Flash video player and were thus not viewable on iOS devices.
 * Child detail pages would display several images and videos before the child's bio, so the page did not display information in the order it was most useful to users.
 
-The client wanted to address the mobile issues initially and address any remaining issues using the original developer. So I created a mobile website with the following enhancements:
+The client wanted to address the mobile issues initially and address any remaining issues using the original developer, so I created a mobile website with the following enhancements:
 
 * Display lists vertically, using fixed-size images and list-item width fixed to the size of the mobile viewport.
 * Sort the list by the children's names and support searching by name.
@@ -22,15 +22,15 @@ The client wanted to address the mobile issues initially and address any remaini
 * Initially display only a single child image and the child's bio, with additional images and videos toggle-able inline with a "Show more pictures" or "Show videos" link.
 
 ### Platform Contraints
-The site was hosted on a server with PHP 5.2 and MySQFL 4.1 but without
+The site was hosted on a server with PHP 5.2 and MySQL 4.1 but without
 the [mysqli](http://php.net/manual/en/book.mysqli.php) or [PDO](http://php.net/manual/en/book.pdo.php) extensions. The only available image manipulation tool was [GD](http://php.net/manual/en/book.image.php).
 
 ### Technical Details
 I used the [Slim](http://www.slimframework.com/) PHP microframework which facillitated an [MVC](http://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller) architecture, clean URLs, simple template integration, and PHP 5.2 support. I used the [Twig](http://twig.sensiolabs.org/) template library and an HTML layout patterned after [HTML5 Boilerplate](http://html5boilerplate.com/).
 
-I would typically use [ORM](http://en.wikipedia.org/wiki/Object-relational_mapping) to handle my models, but I was unable to find an ORM compatible with PHP 5.2 that did not use the PDO extension. Lacking [prepared statements](http://en.wikipedia.org/wiki/Prepared_statement), I used the [original MySQL API](http://php.net/manual/en/book.mysql.php) while being careful to avoid SQL injection issues by using mysql_set_charset and mysql_real_escape_string as described [here](http://stackoverflow.com/a/12118602).
+I would typically use an [ORM](http://en.wikipedia.org/wiki/Object-relational_mapping) to handle my models, but I was unable to find an ORM compatible with PHP 5.2 that did not use the PDO extension. Lacking [prepared statements](http://en.wikipedia.org/wiki/Prepared_statement), I used the [original MySQL API](http://php.net/manual/en/book.mysql.php) and was careful to avoid SQL injection issues by using [mysql_set_charset](http://php.net/manual/en/function.mysql-set-charset.php) and [mysql_real_escape_string](http://php.net/manual/en/function.mysql-real-escape-string.php) as described [in this StackOverflow post](http://stackoverflow.com/a/12118602).
 
-Child images used a variety of sizes and included both landscapes and portraits, so the existing thumbnail strategy of shrinking images to a fixed width was insufficient. I created square thumbnails to provide a consistent look and strike a balance betweek landscape and portrait images. I followed the pattern I had previously used with [ImageMagick](http://www.imagemagick.org/script/index.php) of resizing the image so that its smaller edge was 100 pixels and then cropping the edges to create a 100 x 100 pixel square. I then modified the "Add a Child" administration page so that a thumbnail would be created for any child added in the future.
+The site's photography was shot in a variety of sizes and included both landscapes and portraits, so the existing thumbnail strategy of shrinking images to a fixed height was insufficient. I created square thumbnails to provide a consistent look and strike a balance between landscape and portrait images. I followed a pattern I had previously used with [ImageMagick](http://www.imagemagick.org/script/index.php): shrink the image such that its smaller edge is 100 pixels, then evenly crop the edges to create a 100 x 100 pixel square. I then modified the "Add a Child" administration page so that a thumbnail would be created for any child added in the future.
 
 I used [Mobile Detect](https://github.com/serbanghita/Mobile-Detect) to redirect mobile devices to the mobile website. The mobile site provides a "View Full Site" link allowing mobile users to opt out of the mobile site. The user's preference is saved in a cookie to prevent redirection to the mobile site on subsequent page loads.
 
