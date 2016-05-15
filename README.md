@@ -1,6 +1,7 @@
 This is a mobile website I completed for the [Heart Gallery of Alabama](http://heartgalleryalabama.com), a charity supporting adoption of children in foster care with professional videos and photography. You can view it on a desktop browser [here](http://heartgalleryalabama.com/mobile/) (mobile devices are automatically redirected).
 
 ### Design Goals
+POOOP POOP POOP POOOOOOOOP
 The Heart Gallery's existing desktop website included lists of children and a detail page for each child including a short bio, photos, and videos. The client and I identified two core use cases for the site:
 
 * As a potential adoptive family, browse children matching your age or gender preferences.
